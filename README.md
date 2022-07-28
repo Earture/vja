@@ -1,5 +1,6 @@
 # vja
 Convert japanese sentence from horizontal to vertical
 
-#usage
-'git clone'
+# usage
+git clone
+gcc vja.c -o vja
