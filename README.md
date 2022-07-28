@@ -1,9 +1,9 @@
 # vja
-Convert japanese sentence from horizontal to vertical
+Convert japanese sentence from horizontal to vertical 
 ![image](https://github.com/Earture/vja/blob/main/vja.png)
 
 # usage
-
+###you can run it on macos\linux\wsl
 `git clone https://github.com/Earture/vja` \
 `cd vja` \
 `gcc vja.c -o vja` 
