@@ -6,7 +6,7 @@
 #define maxJaSize 20000
 
 char** getCharProcess(int maxRow);
-void jaPrint(char *line[],int maxRow);
+void jaPrint(char *lineVec[],int maxRow);
 
 int main(int argc, char *argv[]) 
 {
@@ -28,10 +28,10 @@ char** getCharProcess(int maxRow)
 
     char *str = malloc(3*sizeof(char));
     memset(str,0,3*sizeof(char));
-    char **line = malloc(maxRow*sizeof(char *));
+    char **lineVec = malloc(maxRow*sizeof(char *));
     for (int i = 0; i < maxRow; i++) {
-        line[i] = (char *)malloc(LineBuffSize);
-        memset(line[i],0,LineBuffSize);
+        lineVec[i] = (char *)malloc(LineBuffSize);
+        memset(lineVec[i],0,LineBuffSize);
     }
 
     while(count < maxJaSize) {
@@ -40,14 +40,11 @@ char** getCharProcess(int maxRow)
                 ch[i] = getchar();
             } 
             if (ch[i] == EOF) {
-                if (addSpaceSum == 0) {
-                    return line;
-                } else {
-                    beginFill = 1;
-                }
+                if (addSpaceSum == 0) return lineVec;
+                else beginFill = 1;
             }
             if (ch[i] == '\n') ch[i] = getchar();
-            if (beginFill == 1 && !(addSpaceSum)) return line;
+            if (beginFill == 1 && !(addSpaceSum)) return lineVec;
         }  
     
         if (beginFill) {
@@ -57,8 +54,8 @@ char** getCharProcess(int maxRow)
             memcpy(str,ch,4);
         } 
         strncat(str," ",3);
-        strncat(str,line[row],strlen(line[row]));
-        memcpy(line[row],str,strlen(str));
+        strncat(str,lineVec[row],strlen(lineVec[row]));
+        memcpy(lineVec[row],str,strlen(str));
         
         row++;
         if (row > maxRow-1) row = 0;
@@ -67,18 +64,18 @@ char** getCharProcess(int maxRow)
         addSpaceSum = count % maxRow;
     }
     free(str);
-    return line;
+    return lineVec;
 }
 
-void jaPrint(char *line[],int maxRow) 
+void jaPrint(char *lineVec[],int maxRow) 
 {
     for (int j = 0; j < maxRow; j++) {
-        printf("%s",line[j]);
+        printf("%s",lineVec[j]);
         printf("\n");
     }
 
     for (int i = 0; i < maxRow; i++) {
-        free(line[i]);
+        free(lineVec[i]);
     }
-    free(line);
+    free(lineVec);
 }
