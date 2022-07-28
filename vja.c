@@ -2,7 +2,8 @@
 #include<string.h>
 #include<stdlib.h>
 
-#define LineBuffSize 600*sizeof(char)
+
+#define LineBuffSize 6000*sizeof(char)
 #define maxJaSize 20000
 
 char** getCharProcess(int maxRow);
@@ -10,8 +11,11 @@ void jaPrint(char *lineVec[],int maxRow);
 
 int main(int argc, char *argv[]) 
 {
-    int maxRow = 10;
-    if(argc == 2) maxRow = atoi(argv[1]);
+    int maxRow = 7;
+    if(argc == 2) {
+        maxRow = atoi(argv[1]);
+        if(maxRow <= 2 || maxRow > 10000) maxRow = 7;
+    }
    
     jaPrint(getCharProcess(maxRow),maxRow);
 
@@ -38,12 +42,12 @@ char** getCharProcess(int maxRow)
         for (int i = 0; i < 3; i++) {
             if (beginFill == 0) {
                 ch[i] = getchar();
+                while(ch[i] == '\n') ch[i] = getchar();
             } 
             if (ch[i] == EOF) {
                 if (addSpaceSum == 0) return lineVec;
                 else beginFill = 1;
             }
-            if (ch[i] == '\n') ch[i] = getchar();
             if (beginFill == 1 && !(addSpaceSum)) return lineVec;
         }  
     
