@@ -28,13 +28,13 @@ char** getCharProcess(int maxRow)
     int row = 0;
     int addSpaceSum = 0;
     int beginFill = 0;
-    char ch[] = {0, 0, 0};
+    char ch[] = {0, 0, 0, '\0'};
 
-    char *str = malloc(3*sizeof(char));
-    memset(str,0,3*sizeof(char));
+    char *str = malloc(600*sizeof(char));
+    memset(str,0,600*sizeof(char));
     char **lineVec = malloc(maxRow*sizeof(char *));
     for (int i = 0; i < maxRow; i++) {
-        lineVec[i] = (char *)malloc(LineBuffSize);
+        lineVec[i] = malloc(LineBuffSize);
         memset(lineVec[i],0,LineBuffSize);
     }
 
@@ -45,10 +45,15 @@ char** getCharProcess(int maxRow)
                 while(ch[i] == '\n') ch[i] = getchar();
             } 
             if (ch[i] == EOF) {
-                if (addSpaceSum == 0) return lineVec;
+                if (addSpaceSum == 0) {
+                    free(str);
+                    return lineVec;
+                }
                 else beginFill = 1;
             }
-            if (beginFill == 1 && !(addSpaceSum)) return lineVec;
+            if (beginFill == 1 && !(addSpaceSum)) {
+                free(str);
+                return lineVec;}
         }  
     
         if (beginFill) {
