@@ -14,4 +14,4 @@ Convert japanese sentence from horizontal to vertical
 
 
 Of course, you can also customize the number of text contained in each column \
-`./vja 10 < xxx.txt`  or  `cat xxx.txt | ./vja 10` 
+`./vja -v 10 < xxx.txt`  or  `cat xxx.txt | ./vja -v 10` 
