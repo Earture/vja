@@ -1,6 +1,8 @@
+#include<ctype.h>
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
+#include <unistd.h>
 
 
 #define LineBuffSize 300*sizeof(char)
@@ -11,14 +13,32 @@ void jaPrint(char *lineVec[],int maxRow);
 
 int main(int argc, char *argv[]) 
 {
+
     int maxRow = 7;
-    if(argc == 2) {
-        maxRow = atoi(argv[1]);
-        if(maxRow <= 2 || maxRow > 10000) maxRow = 7;
-    }
+    int aflag = 0;
+    int bflag = 0;
+    char *cvalue = NULL;
+    int index;
+    int c;
+    opterr = 0;
+
+    while ((c = getopt (argc, argv, "hv:")) != -1)
+        switch (c)
+        {
+        case 'v':
+            maxRow = atoi(optarg);
+            if(maxRow <= 2 || maxRow > 10000) maxRow = 7;
+            break;
+        case 'h':
+            fprintf (stderr, "vja Version 1.0\n");
+            fprintf (stderr, "Usage: vja [-v num] text\n");
+            return 0;
+        default:
+            fprintf (stderr, "mistake!\n");
+            return 0;
+        }
    
     jaPrint(getCharProcess(maxRow),maxRow);
-
     return 0;
 }
 
@@ -28,7 +48,7 @@ char** getCharProcess(int maxRow)
     int row = 0;
     int addSpaceSum = 0;
     int beginFill = 0;
-    char ch[] = {0, 0, 0, '\0'};
+    char ch[] = {0, 0, 0};
 
     char *str = malloc(600*sizeof(char));
     memset(str,0,600*sizeof(char));
@@ -57,12 +77,12 @@ char** getCharProcess(int maxRow)
         }  
     
         if (beginFill) {
-            memcpy(str,"  ",4);
+            memcpy(str,"  ",3);
         }
         else {
             memcpy(str,ch,4);
         } 
-        strncat(str," ",3);
+        strncat(str," ",2);
         strncat(str,lineVec[row],strlen(lineVec[row]));
         memcpy(lineVec[row],str,strlen(str));
         
