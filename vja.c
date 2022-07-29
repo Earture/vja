@@ -15,12 +15,7 @@ int main(int argc, char *argv[])
 {
 
     int maxRow = 7;
-    int aflag = 0;
-    int bflag = 0;
-    char *cvalue = NULL;
-    int index;
     int c;
-    opterr = 0;
 
     while ((c = getopt (argc, argv, "hv:")) != -1)
         switch (c)
