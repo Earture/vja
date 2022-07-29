@@ -3,7 +3,7 @@
 #include<stdlib.h>
 
 
-#define LineBuffSize 6000*sizeof(char)
+#define LineBuffSize 300*sizeof(char)
 #define maxJaSize 20000
 
 char** getCharProcess(int maxRow);
