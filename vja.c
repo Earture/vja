@@ -2,7 +2,7 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
-#include <unistd.h>
+#include<unistd.h>
 
 char** getCharProcess(int maxRow,int LineBuffSize,int count);
 void jaPrint(char *lineVec[],int maxRow);
