@@ -58,7 +58,7 @@ char** getCharProcess(int maxRow)
         memset(lineVec[i],'\0',LineBuffSize);
     }
 
-    while(count <= LineBuffSize) {
+    while(count <= 5000) {
         for (int i = 0; i < 3; i++) {
             if (beginFill == 0) {
                 ch[i] = getchar();
