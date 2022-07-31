@@ -6,7 +6,7 @@ Convert japanese sentence from horizontal to vertical
 ### running it on macos\linux\wsl
 `git clone https://github.com/Earture/vja` \
 `cd vja` \
-`make install` 
+`make install` \
 `vja  < xxx.txt` or `cat xxx.txt | vja` 
 
 ### Please make sure that the text you enter is utf8 encoded Japanese full width characters， if not you could use [fja](https://github.com/Earture/fja) to convert it first.
