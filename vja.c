@@ -6,7 +6,7 @@
 
 
 #define LineBuffSize 300*sizeof(char)
-#define maxJaSize 20000
+
 
 char** getCharProcess(int maxRow);
 void jaPrint(char *lineVec[],int maxRow);
@@ -15,7 +15,12 @@ int main(int argc, char *argv[])
 {
 
     int maxRow = 7;
+    int aflag = 0;
+    int bflag = 0;
+    char *cvalue = NULL;
+    int index;
     int c;
+    opterr = 0;
 
     while ((c = getopt (argc, argv, "hv:")) != -1)
         switch (c)
@@ -50,10 +55,10 @@ char** getCharProcess(int maxRow)
     char **lineVec = malloc(maxRow*sizeof(char *));
     for (int i = 0; i < maxRow; i++) {
         lineVec[i] = malloc(LineBuffSize);
-        memset(lineVec[i],0,LineBuffSize);
+        memset(lineVec[i],'\0',LineBuffSize);
     }
 
-    while(count < maxJaSize) {
+    while(count <= LineBuffSize) {
         for (int i = 0; i < 3; i++) {
             if (beginFill == 0) {
                 ch[i] = getchar();
@@ -80,6 +85,7 @@ char** getCharProcess(int maxRow)
         strncat(str," ",2);
         strncat(str,lineVec[row],strlen(lineVec[row]));
         memcpy(lineVec[row],str,strlen(str));
+        memset(str,'\0',600*sizeof(char));
         
         row++;
         if (row > maxRow-1) row = 0;
