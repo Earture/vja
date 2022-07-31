@@ -4,61 +4,63 @@
 #include<stdlib.h>
 #include <unistd.h>
 
-
-#define LineBuffSize 300*sizeof(char)
-
-
-char** getCharProcess(int maxRow);
+char** getCharProcess(int maxRow,int LineBuffSize,int count);
 void jaPrint(char *lineVec[],int maxRow);
 
 int main(int argc, char *argv[]) 
 {
 
     int maxRow = 7;
-    int aflag = 0;
-    int bflag = 0;
-    char *cvalue = NULL;
-    int index;
+    int LineBuffSize = 300;
+    int count = 4000;
     int c;
     opterr = 0;
 
-    while ((c = getopt (argc, argv, "hv:")) != -1)
+    while ((c = getopt (argc, argv, "hv:l:c:")) != -1) {
         switch (c)
         {
         case 'v':
             maxRow = atoi(optarg);
             if(maxRow <= 2 || maxRow > 10000) maxRow = 7;
+         
+            break;
+        case 'l':
+            LineBuffSize = atoi(optarg);
+            
+            break;
+        case 'c':
+            count = atoi(optarg);
+           
             break;
         case 'h':
-            fprintf (stderr, "vja Version 1.0\n");
+            fprintf (stderr, "vja Version 0.2\n");
             fprintf (stderr, "Usage: vja [-v num] text\n");
             return 0;
         default:
             fprintf (stderr, "mistake!\n");
             return 0;
         }
-   
-    jaPrint(getCharProcess(maxRow),maxRow);
+    }
+    jaPrint(getCharProcess(maxRow,LineBuffSize,count),maxRow);
     return 0;
 }
 
-char** getCharProcess(int maxRow) 
+char** getCharProcess(int maxRow,int LineBuffSize,int count) 
 {
-    int count = 0;
     int row = 0;
     int addSpaceSum = 0;
     int beginFill = 0;
     char ch[] = {0, 0, 0};
 
-    char *str = malloc(600*sizeof(char));
-    memset(str,0,600*sizeof(char));
+    char *str = malloc(LineBuffSize);
+    memset(str,0,LineBuffSize);
     char **lineVec = malloc(maxRow*sizeof(char *));
     for (int i = 0; i < maxRow; i++) {
         lineVec[i] = malloc(LineBuffSize);
         memset(lineVec[i],'\0',LineBuffSize);
     }
 
-    while(count <= 5000) {
+    while(count) {
         for (int i = 0; i < 3; i++) {
             if (beginFill == 0) {
                 ch[i] = getchar();
@@ -85,12 +87,13 @@ char** getCharProcess(int maxRow)
         strncat(str," ",2);
         strncat(str,lineVec[row],strlen(lineVec[row]));
         memcpy(lineVec[row],str,strlen(str));
-        memset(str,'\0',600*sizeof(char));
+        memset(str,'\0',LineBuffSize);
         
         row++;
         if (row > maxRow-1) row = 0;
         
-        count++;
+        count--;
+        //printf("OK:%d",count);
         addSpaceSum = count % maxRow;
     }
     free(str);
