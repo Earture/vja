@@ -2,7 +2,7 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
-#include<unistd.h>
+#include <unistd.h>
 
 char** getCharProcess(int maxRow,int LineBuffSize,int count);
 void jaPrint(char *lineVec[],int maxRow);
@@ -79,12 +79,12 @@ char** getCharProcess(int maxRow,int LineBuffSize,int count)
         }  
     
         if (beginFill) {
-            memcpy(str,"  ",3);
+            memcpy(str,"  ",strlen("  "));
         }
         else {
-            memcpy(str,ch,4);
+            memcpy(str,ch,strlen(ch));
         } 
-        strncat(str," ",2);
+        strncat(str," ",strlen(" "));
         strncat(str,lineVec[row],strlen(lineVec[row]));
         memcpy(lineVec[row],str,strlen(str));
         memset(str,'\0',LineBuffSize);
