@@ -33,8 +33,8 @@ int main(int argc, char *argv[])
            
             break;
         case 'h':
-            fprintf (stderr, "vja Version 0.2\n");
-            fprintf (stderr, "Usage: vja [-v num] text\n");
+            fprintf (stderr, "vja Version 0.3\n");
+            fprintf (stderr, "Usage: vja [-v CharactersPerColumn][-l MaxCharactersPerLine][-c MaxInputCharacters] text\n");
             return 0;
         default:
             fprintf (stderr, "mistake!\n");
@@ -45,10 +45,11 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-char** getCharProcess(int maxRow,int LineBuffSize,int count) 
+char** getCharProcess(int maxRow,int LineBuffSize,int settedCount) 
 {
     int row = 0;
     int addSpaceSum = 0;
+    int count = 0;
     int beginFill = 0;
     char ch[] = {0, 0, 0};
 
@@ -60,26 +61,30 @@ char** getCharProcess(int maxRow,int LineBuffSize,int count)
         memset(lineVec[i],'\0',LineBuffSize);
     }
 
-    while(count) {
+    while(settedCount) {
         for (int i = 0; i < 3; i++) {
             if (beginFill == 0) {
                 ch[i] = getchar();
                 while(ch[i] == '\n') ch[i] = getchar();
             } 
-            if (ch[i] == EOF) {
+            if (ch[i] == EOF && beginFill != 1) {
                 if (addSpaceSum == 0) {
                     free(str);
                     return lineVec;
                 }
-                else beginFill = 1;
+                else {
+                    beginFill = 1;
+                    }
             }
             if (beginFill == 1 && !(addSpaceSum)) {
                 free(str);
-                return lineVec;}
+                return lineVec;
+                }
         }  
     
         if (beginFill) {
             memcpy(str,"  ",strlen("  "));
+           
         }
         else {
             memcpy(str,ch,strlen(ch));
@@ -92,7 +97,8 @@ char** getCharProcess(int maxRow,int LineBuffSize,int count)
         row++;
         if (row > maxRow-1) row = 0;
         
-        count--;
+        count++;
+        settedCount--;
         //printf("OK:%d",count);
         addSpaceSum = count % maxRow;
     }
