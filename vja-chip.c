@@ -67,7 +67,7 @@ char** getCharProcess(int maxRow,int LineBuffSize,int settedCount)
 	    tempChar = getchar();
             if (beginFill == 0 && tempChar != EOF) {
                 ch[i] = tempChar;
-               // while(ch[i] == '\n') ch[i] = getchar();
+                while(ch[i] == '\n') ch[i] = getchar();
             } 
             if (tempChar == EOF && beginFill != 1) {
                 if (addSpaceSum == 0) {
@@ -86,10 +86,9 @@ char** getCharProcess(int maxRow,int LineBuffSize,int settedCount)
     
         if (beginFill) {
             memcpy(str,"  ",strlen("  "));
-           
         }
         else {
-            memcpy(str,ch,strlen(ch));
+            memcpy(str,ch,3);
         } 
         strncat(str," ",strlen(" ")+1);
         strncat(str,lineVec[row],strlen(lineVec[row]));
